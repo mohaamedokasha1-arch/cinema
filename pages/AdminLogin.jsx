@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Eye, EyeOff, LockKeyhole, ShieldAlert } from 'lucide-react';
 import { useMovies } from '../context/MoviesContext';
+import { usePageSeo } from '../utils/seo';
 
 export default function AdminLogin() {
+  usePageSeo({ title: 'تسجيل الدخول | سينما العرب', path: '/admin/login', noindex: true });
   const { isAdmin, login } = useMovies();
   const navigate = useNavigate();
   const location = useLocation();

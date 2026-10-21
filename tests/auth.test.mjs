@@ -96,6 +96,23 @@ test('home page includes Google Search Console verification meta tag in head', a
   );
 });
 
+test('robots.txt and sitemap.xml are served as plain text and XML instead of SPA shell', async () => {
+  const robots = await fetch(`${baseUrl}/robots.txt`, { headers: { accept: 'text/html,*/*' } });
+  assert.equal(robots.status, 200);
+  assert.match(robots.headers.get('content-type') || '', /text\/plain/);
+  const robotsBody = await robots.text();
+  assert.match(robotsBody, /User-agent: \*/);
+  assert.match(robotsBody, /Sitemap: https:\/\/cinema-elarab\.vercel\.app\/sitemap\.xml/);
+
+  const sitemap = await fetch(`${baseUrl}/sitemap.xml`, { headers: { accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' } });
+  assert.equal(sitemap.status, 200);
+  assert.match(sitemap.headers.get('content-type') || '', /xml/);
+  const sitemapBody = await sitemap.text();
+  assert.match(sitemapBody, /<urlset/);
+  assert.match(sitemapBody, /<loc>https:\/\/cinema-elarab\.vercel\.app\/<\/loc>/);
+  assert.match(sitemapBody, /<loc>https:\/\/cinema-elarab\.vercel\.app\/watch\/dark-knight<\/loc>/);
+});
+
 test('anonymous session is not authenticated', async () => {
   const response = await fetch(`${baseUrl}/api/admin/session`);
   assert.equal(response.status, 200);

@@ -44,6 +44,22 @@ async function main() {
     report(response.ok, `route ${route}`, `HTTP ${response.status}`);
   }
 
+  const robots = await fetch(`${base}/robots.txt`);
+  const robotsText = await robots.text();
+  report(
+    robots.ok && robotsText.includes('User-agent: *') && robotsText.includes('Sitemap: https://cinema-elarab.vercel.app/sitemap.xml'),
+    'robots.txt served with sitemap reference',
+    `HTTP ${robots.status}`,
+  );
+
+  const sitemap = await fetch(`${base}/sitemap.xml`);
+  const sitemapXml = await sitemap.text();
+  report(
+    sitemap.ok && sitemapXml.includes('<urlset') && sitemapXml.includes('https://cinema-elarab.vercel.app/watch/dark-knight'),
+    'sitemap.xml served as XML',
+    `HTTP ${sitemap.status}`,
+  );
+
   const session = await fetch(`${base}/api/admin/session`);
   const sessionBody = await session.json().catch(() => null);
   report(session.ok, 'admin session endpoint responds', `HTTP ${session.status}`);

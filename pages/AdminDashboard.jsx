@@ -4,8 +4,10 @@ import { ArrowRight, Check, Clapperboard, Download, Film, Pencil, Plus, Search, 
 import { useMovies } from '../context/MoviesContext';
 import { getSafePosterSrc } from '../utils/media';
 import MovieForm from '../components/MovieForm';
+import { usePageSeo } from '../utils/seo';
 
 export default function AdminDashboard() {
+  usePageSeo({ title: 'لوحة التحكم | سينما العرب', path: '/admin', noindex: true });
   const { movies, addMovie, updateMovie, deleteMovie } = useMovies();
   const [showForm, setShowForm] = useState(false);
   const [editingMovie, setEditingMovie] = useState(null);

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, CalendarDays, Clock3, ExternalLink, Heart, Link2, Play, Star, VideoOff } from 'lucide-react';
 import { useMovies } from '../context/MoviesContext';
 import { getSafeMediaSrc, getSafePosterSrc, getTrustedEmbedSrc } from '../utils/media';
+import { DEFAULT_DESCRIPTION, usePageSeo } from '../utils/seo';
 import MovieCard from '../components/MovieCard';
 
 export default function WatchPage() {
@@ -12,12 +13,17 @@ export default function WatchPage() {
   const [playerStarted, setPlayerStarted] = useState(false);
   const movie = movies.find((item) => item.id === id);
   useEffect(() => { setPlayerStarted(false); setShareMessage(''); }, [id]);
+  const title = movie ? (movie.titleAr || movie.title || 'عمل بدون عنوان') : 'هذا العمل غير موجود';
+  usePageSeo({
+    title: `${title} | سينما العرب`,
+    description: movie?.description || DEFAULT_DESCRIPTION,
+    path: `/watch/${encodeURIComponent(id || '')}`,
+    noindex: !movie,
+  });
 
   if (!movie) return (
     <main className="container-wide page-missing"><VideoOff size={45} /><h1>هذا العمل غير موجود</h1><p>ربما تم حذفه من المكتبة أو تغيّر رابطه.</p><Link to="/" className="button button--gold">العودة للمكتبة <ArrowRight size={17} /></Link></main>
   );
-
-  const title = movie.titleAr || movie.title || 'عمل بدون عنوان';
   const directVideo = getSafeMediaSrc(movie.videoUrl);
   const subtitles = directVideo && getSafeMediaSrc(movie.subtitleUrl);
   const embed = getTrustedEmbedSrc(movie.embedCode);

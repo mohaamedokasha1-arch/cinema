@@ -66,7 +66,7 @@ export default function AdminDashboard() {
       <Link to="/" className="back-link"><ArrowRight size={18} /> العودة إلى الموقع</Link>
       <div className="admin-header"><div><span className="section-kicker">استوديو سينما العرب</span><h1>لوحة <em>التحكم.</em></h1><p>نظّم مكتبتك السينمائية من مكان واحد.</p></div><button type="button" className="button button--gold" onClick={showForm ? cancelForm : startNew}>{showForm ? <X size={18} /> : <Plus size={19} />}{showForm ? 'إغلاق النموذج' : 'إضافة عمل جديد'}</button></div>
 
-      <div className="admin-notice"><ShieldAlert size={20} /><p><strong>وضع تجريبي:</strong> التغييرات وبيانات الدخول محفوظة في متصفحك فقط، ولا تظهر للزوار الآخرين. تحتاج النسخة المنشورة إلى خادم وتوثيق حقيقي وقاعدة بيانات.</p></div>
+      <div className="admin-notice"><ShieldAlert size={20} /><p><strong>حفظ المكتبة:</strong> تُحفظ التعديلات في هذا المتصفح مباشرةً، لذا احرص على تنزيل <strong>نسخة احتياطية</strong> بانتظام للاحتفاظ بنسخة من قائمة الأعمال.</p></div>
 
       <div className="stats-grid">
         <div className="stat-card"><span className="stat-card__icon"><Film size={24} /></span><span>الأفلام</span><strong>{countMovies}</strong><small>فيلم في المجموعة</small></div>

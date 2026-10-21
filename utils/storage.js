@@ -2,11 +2,8 @@ import { sampleMovies } from '../data/sampleMovies';
 
 const MOVIES_KEY = 'cinema_al_arab_movies_v1';
 const FAVORITES_KEY = 'cinema_al_arab_favorites_v1';
-const ADMIN_KEY = 'cinema_al_arab_admin_demo_v1';
+const LEGACY_ADMIN_KEY = 'cinema_al_arab_admin_demo_v1';
 const LEGACY_KEY = 'movies_db';
-
-// DEMO ONLY: this is not authentication. A production app needs a backend.
-const DEMO_ADMIN = { username: 'admin', password: 'admin123' };
 
 function readJson(key) {
   try {
@@ -80,23 +77,9 @@ export const storage = {
     return { success: saveJson(FAVORITES_KEY, favorites), favorites };
   },
 
-  login(username, password) {
-    if (username.trim() !== DEMO_ADMIN.username || password !== DEMO_ADMIN.password) {
-      return { success: false, message: 'اسم المستخدم أو كلمة المرور غير صحيحة.' };
-    }
-    try {
-      localStorage.setItem(ADMIN_KEY, 'demo');
-      return { success: true };
-    } catch {
-      return { success: false, message: 'الرجاء تفعيل التخزين المحلي في المتصفح.' };
-    }
-  },
-
-  logout() {
-    try { localStorage.removeItem(ADMIN_KEY); } catch { /* storage disabled */ }
-  },
-
-  isAuthenticated() {
-    try { return localStorage.getItem(ADMIN_KEY) === 'demo'; } catch { return false; }
+  // Removes the flag left by older browser-only logins so it can never be
+  // mistaken for a valid admin session. Real sessions live in an HttpOnly cookie.
+  purgeLegacyAdminState() {
+    try { localStorage.removeItem(LEGACY_ADMIN_KEY); } catch { /* storage disabled */ }
   },
 };

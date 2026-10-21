@@ -78,7 +78,7 @@ export default function WatchPage() {
               <div className="player-empty"><VideoOff size={38} /><strong>لا يوجد فيديو متاح حاليًا</strong><p>يمكن إضافة مقطع أو فيديو مرخّص من لوحة الإدارة.</p></div>
             )}
           </div>
-          <div className="player-footnote"><span className="player-footnote__dot" /><span>{directVideo ? 'فيديو مضاف من لوحة الإدارة. تتوفر الترجمة إن تم ربط ملف VTT.' : 'الفيديو المعروض مقطع دعائي للتجربة، وليس الفيلم أو الحلقة كاملة.'}</span>{!directVideo && embed && <a href={embed} target="_blank" rel="noopener noreferrer">فتح المقطع <ExternalLink size={14} /></a>}</div>
+          <div className="player-footnote"><span className="player-footnote__dot" /><span>{directVideo ? 'فيديو مضاف من لوحة الإدارة. تتوفر الترجمة إن تم ربط ملف VTT.' : 'الفيديو المعروض مقطع دعائي، وليس الفيلم أو الحلقة كاملة.'}</span>{!directVideo && embed && <a href={embed} target="_blank" rel="noopener noreferrer">فتح المقطع <ExternalLink size={14} /></a>}</div>
 
           <div className="watch-story"><span className="section-kicker">عن العمل</span><h2>القصة</h2><p>{movie.description || 'لا يتوفر وصف لهذا العمل بعد.'}</p><button type="button" className="share-link" onClick={share}><Link2 size={16} /> مشاركة هذا العمل</button>{shareMessage && <span className="share-message" role="status">{shareMessage}</span>}</div>
         </div>

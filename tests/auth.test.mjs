@@ -86,6 +86,16 @@ after(() => {
   server?.kill();
 });
 
+test('home page includes Google Search Console verification meta tag in head', async () => {
+  const response = await fetch(`${baseUrl}/`, { headers: { accept: 'text/html' } });
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(
+    html,
+    /<head>[\s\S]*<meta\s+name="google-site-verification"\s+content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4"\s*\/?>[\s\S]*<\/head>/,
+  );
+});
+
 test('anonymous session is not authenticated', async () => {
   const response = await fetch(`${baseUrl}/api/admin/session`);
   assert.equal(response.status, 200);

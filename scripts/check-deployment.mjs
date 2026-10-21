@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Read-only smoke check for a deployment.
-// Usage: npm run check:deploy -- https://cinema-el3arab.vercel.app
-const base = (process.argv[2] || 'https://cinema-el3arab.vercel.app').replace(/\/+$/, '');
+// Usage: npm run check:deploy -- https://cinema-elarab.vercel.app
+const base = (process.argv[2] || 'https://cinema-elarab.vercel.app').replace(/\/+$/, '');
 let failures = 0;
 
 function report(ok, label, detail = '') {
@@ -16,6 +16,11 @@ async function main() {
   const html = await home.text();
   report(home.ok, 'home page responds', `HTTP ${home.status}`);
   report(html.includes('id="root"'), 'SPA shell served');
+  report(
+    html.includes('name="google-site-verification"') &&
+      html.includes('content="6nwKbe3UwHbbzzDg0S8a6TRE_rEEIAdyGgIJD6q6ua4"'),
+    'Google Search Console verification meta tag present',
+  );
   report(!/admin123|admin_demo|DEMO STUDIO/.test(html), 'no demo credentials in HTML');
 
   const asset = html.match(/src="(\/assets\/index-[^"]+\.js)"/)?.[1];

@@ -5,6 +5,7 @@ import { useMovies } from '../context/MoviesContext';
 import MovieCard from '../components/MovieCard';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
+import { usePageSeo } from '../utils/seo';
 
 const tabs = [
   { key: 'all', label: 'جميع الأعمال', icon: Clapperboard },
@@ -25,6 +26,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('الكل');
   const [sortBy, setSortBy] = useState('curated');
+  usePageSeo({ path: '/' });
 
   const pickTab = (key) => {
     setSearchParams(key === 'all' ? {} : { type: key });

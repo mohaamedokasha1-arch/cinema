@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import WatchPage from './pages/WatchPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import { usePageSeo } from './utils/seo';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -17,6 +18,8 @@ function ScrollToTop() {
 }
 
 function NotFound() {
+  const { pathname } = useLocation();
+  usePageSeo({ title: 'الصفحة غير موجودة | سينما العرب', path: pathname, noindex: true });
   return <main className="container-wide page-missing"><Clapperboard size={45} /><h1>هذه الصفحة ليست هنا</h1><p>لكن هناك الكثير من الحكايات بانتظارك في المكتبة.</p><Link to="/" className="button button--gold">العودة للرئيسية <ArrowRight size={17} /></Link></main>;
 }
 

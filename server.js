@@ -3,6 +3,7 @@ import http from 'node:http';
 import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
+import { handleApiRequest } from './server/auth.js';
 
 const root = resolve('dist');
 const port = Number(process.env.PORT) || 3000;
@@ -24,11 +25,13 @@ const mime = {
 };
 
 http.createServer(async (req, res) => {
-  if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
   let pathname;
   try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch { res.writeHead(400); res.end('Bad request'); return; }
   if (pathname.includes('\0')) { res.writeHead(400); res.end('Bad request'); return; }
+  // Admin authentication API: verified on the server, never in the client bundle.
+  if (pathname.startsWith('/api/')) { await handleApiRequest(req, res, pathname); return; }
+  if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
   const requested = resolve(root, `.${pathname}`);
   if (requested !== root && !requested.startsWith(root + sep)) { res.writeHead(403); res.end(); return; }
 

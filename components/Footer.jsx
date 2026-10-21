@@ -11,9 +11,9 @@ export default function Footer() {
           <p>مساحة صغيرة للحكايات الكبيرة. اكتشف أعمالاً مختارة واحتفظ بما تحب في قائمتك.</p>
         </div>
         <div className="footer-links"><span>اكتشف</span><Link to="/">كل الأعمال</Link><Link to="/?type=movie">الأفلام</Link><Link to="/?type=series">المسلسلات</Link></div>
-        <div className="footer-links"><span>حسابك</span><Link to="/?type=favorites"><Heart size={15} /> قائمتي</Link><Link to="/admin/login">لوحة الإدارة التجريبية</Link></div>
+        <div className="footer-links"><span>حسابك</span><Link to="/?type=favorites"><Heart size={15} /> قائمتي</Link><Link to="/admin/login">لوحة الإدارة</Link></div>
       </div>
-      <div className="container-wide footer-bottom"><span>© {new Date().getFullYear()} سينما العرب. مشروع عرض توضيحي.</span><span>المقاطع المعروضة دعائية، وحقوق الأعمال لأصحابها.</span></div>
+      <div className="container-wide footer-bottom"><span>© {new Date().getFullYear()} سينما العرب. جميع الحقوق محفوظة.</span><span>المقاطع المعروضة دعائية، وحقوق الأعمال لأصحابها.</span></div>
     </footer>
   );
 }
